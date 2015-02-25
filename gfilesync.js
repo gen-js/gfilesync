@@ -12,12 +12,15 @@ var GFileSync = (function() {
   GFileSync.prototype.mkdir = function(dir) {
     mkdirp.sync(dir);
   };
+  GFileSync.prototype.isAbsolute = function(filepath) {
+    return filepath.charAt(0) == '/' || (filepath.charAt(1) == ':' && filepath.charAt(2) == path.sep);
+  };
   GFileSync.prototype.copy = function(infile, outfile) {
     try {
-      if(!path.isAbsolute(infile)) {
+      if(!this.isAbsolute(infile)) {
         infile = path.join(process.cwd(), infile);
       }
-      if(!path.isAbsolute(outfile)) {
+      if(!this.isAbsolute(outfile)) {
         outfile = path.join(process.cwd(), outfile);
       }
 
@@ -38,10 +41,10 @@ var GFileSync = (function() {
   };
   GFileSync.prototype.template = function(inFile, outFile, params) {
     try {
-      if(!path.isAbsolute(infile)) {
+      if(!this.isAbsolute(infile)) {
         infile = path.join(process.cwd(), infile);
       }
-      if(!path.isAbsolute(outfile)) {
+      if(!this.isAbsolute(outfile)) {
         outfile = path.join(process.cwd(), outfile);
       }
 
