@@ -1,7 +1,7 @@
 {
     "name": "gfilesync",
     "description": "GenJS file synchronous functions",
-    "version": "0.0.3",
+    "version": "0.0.5",
     "private": false,
     "licenses": [
         {
@@ -11,7 +11,7 @@
     "engines": {
         "node": ">= 0.8.0"
     },
-    "main": "lib/gfilesync.js",
+    "main": "gfilesync.js",
     "scripts": {
         "test": "node node_modules/jasmine-node/lib/jasmine-node/cli.js spec"
     },
@@ -21,6 +21,7 @@
     "dependencies": {
       "mkdirp": "*",
       "ejs": "*",
-      "isbinaryfile": "*"
+      "isbinaryfile": "*",
+      "js-yaml": "*"
     }
 }

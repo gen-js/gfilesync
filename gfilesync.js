@@ -3,7 +3,8 @@ var
   path = require('path'),
   mkdirp = require('mkdirp'),
   ejs = require('ejs'),
-  isBinaryFile = require("isbinaryfile");
+  isBinaryFile = require("isbinaryfile"),
+  yaml = require("js-yaml");
 
 var GFileSync = (function() {
   function GFileSync() {
@@ -14,6 +15,32 @@ var GFileSync = (function() {
   };
   GFileSync.prototype.isAbsolute = function(filepath) {
     return filepath.charAt(0) == '/' || (filepath.charAt(1) == ':' && filepath.charAt(2) == path.sep);
+  };
+  GFileSync.prototype.loadYaml = function(file) {
+    if(!this.isAbsolute(file)) {
+      file = path.join(process.cwd(), file);
+    }
+    try {
+      var content = yaml.safeLoad(fs.readFileSync(file, 'utf8'));
+    }
+    catch(e) {
+      console.log('Error : bad YAML file : ', file);
+      throw e;
+    }
+    return content;
+  };
+  GFileSync.prototype.writeYaml = function(file, content) {
+    if(!this.isAbsolute(file)) {
+      file = path.join(process.cwd(), file);
+    }
+    try {
+      var yamlContent = yaml.safeDump(content);
+      fs.writeFileSync(file, yamlContent, 'utf8');
+    }
+    catch(e) {
+      console.log('Error : write YAML file : ', file);
+      throw e;
+    }
   };
   GFileSync.prototype.copy = function(infile, outfile) {
     try {
