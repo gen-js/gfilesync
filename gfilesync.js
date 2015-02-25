@@ -68,4 +68,4 @@ var GFileSync = (function() {
   return GFileSync;
 })();
 
-module.exports = GFileSync;
+module.exports = new GFileSync();
